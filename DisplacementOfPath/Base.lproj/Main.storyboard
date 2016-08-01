@@ -22,21 +22,30 @@
                                 <rect key="frame" x="0.0" y="-52" width="600" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aEq-px-PJQ">
-                                <rect key="frame" x="20" y="562" width="46" height="30"/>
-                                <state key="normal" title="Button"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YXq-q3-IAl">
+                                <rect key="frame" x="25" y="562" width="46" height="30"/>
+                                <state key="normal" title="Create"/>
                                 <connections>
-                                    <action selector="displacePolylines:" destination="BYZ-38-t0r" eventType="touchUpInside" id="RP8-U7-mxf"/>
+                                    <action selector="createTestPolylines:" destination="BYZ-38-t0r" eventType="touchUpInside" id="eSb-L5-M5I"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aEq-px-PJQ">
+                                <rect key="frame" x="151" y="562" width="59" height="30"/>
+                                <state key="normal" title="Displace"/>
+                                <connections>
+                                    <action selector="displacePolylines:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Qr2-P4-hkh"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="aEq-px-PJQ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="0Sq-us-KwP"/>
+                            <constraint firstItem="aEq-px-PJQ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="131" id="0Sq-us-KwP"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="YXq-q3-IAl" secondAttribute="bottom" constant="8" id="8Qf-VG-sTX"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="aEq-px-PJQ" secondAttribute="bottom" constant="8" id="EaY-lU-flb"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="jN8-I8-fmq" secondAttribute="bottom" constant="52" id="F3D-eZ-23B"/>
                             <constraint firstItem="jN8-I8-fmq" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" constant="-52" id="I4d-Eq-na1"/>
                             <constraint firstItem="jN8-I8-fmq" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="osT-oW-Uij"/>
+                            <constraint firstItem="YXq-q3-IAl" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="5" id="rz4-ik-nRY"/>
                             <constraint firstAttribute="trailingMargin" secondItem="jN8-I8-fmq" secondAttribute="trailing" constant="-20" id="ywg-yg-1MJ"/>
                         </constraints>
                     </view>

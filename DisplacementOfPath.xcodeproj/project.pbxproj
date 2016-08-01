@@ -7,13 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9CF83A7D1D40E855009F114C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF83A7C1D40E855009F114C /* AppDelegate.swift */; };
-		9CF83A7F1D40E855009F114C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF83A7E1D40E855009F114C /* ViewController.swift */; };
+		9CF83A7D1D40E855009F114C /* DoPAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF83A7C1D40E855009F114C /* DoPAppDelegate.swift */; };
+		9CF83A7F1D40E855009F114C /* DoPViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF83A7E1D40E855009F114C /* DoPViewController.swift */; };
 		9CF83A821D40E855009F114C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CF83A801D40E855009F114C /* Main.storyboard */; };
 		9CF83A841D40E855009F114C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9CF83A831D40E855009F114C /* Assets.xcassets */; };
 		9CF83A871D40E855009F114C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CF83A851D40E855009F114C /* LaunchScreen.storyboard */; };
 		9CF83A921D40E856009F114C /* DisplacementOfPathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF83A911D40E856009F114C /* DisplacementOfPathTests.swift */; };
-		9CF83A9D1D40E89A009F114C /* SPPolylineManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF83A9C1D40E89A009F114C /* SPPolylineManager.swift */; };
+		9CF83A9D1D40E89A009F114C /* DoPPolylineManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF83A9C1D40E89A009F114C /* DoPPolylineManager.swift */; };
+		9CFF46E31D4C52F700504407 /* DoPRandomColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFF46E21D4C52F700504407 /* DoPRandomColor.swift */; };
+		9CFF46E51D4F803300504407 /* DoPFloatingPointExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFF46E41D4F803300504407 /* DoPFloatingPointExtension.swift */; };
 		A5F595C9E80708267285C1FF /* Pods_DisplacementOfPath.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2ABCADC2B3D7B14D233CDA66 /* Pods_DisplacementOfPath.framework */; };
 /* End PBXBuildFile section */
 
@@ -31,8 +33,8 @@
 		2ABCADC2B3D7B14D233CDA66 /* Pods_DisplacementOfPath.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DisplacementOfPath.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		763923CF28A996CF84131132 /* Pods-DisplacementOfPath.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DisplacementOfPath.release.xcconfig"; path = "Pods/Target Support Files/Pods-DisplacementOfPath/Pods-DisplacementOfPath.release.xcconfig"; sourceTree = "<group>"; };
 		9CF83A791D40E855009F114C /* DisplacementOfPath.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DisplacementOfPath.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		9CF83A7C1D40E855009F114C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		9CF83A7E1D40E855009F114C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		9CF83A7C1D40E855009F114C /* DoPAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoPAppDelegate.swift; sourceTree = "<group>"; };
+		9CF83A7E1D40E855009F114C /* DoPViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoPViewController.swift; sourceTree = "<group>"; };
 		9CF83A811D40E855009F114C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9CF83A831D40E855009F114C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9CF83A861D40E855009F114C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -40,7 +42,9 @@
 		9CF83A8D1D40E856009F114C /* DisplacementOfPathTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DisplacementOfPathTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CF83A911D40E856009F114C /* DisplacementOfPathTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplacementOfPathTests.swift; sourceTree = "<group>"; };
 		9CF83A931D40E856009F114C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9CF83A9C1D40E89A009F114C /* SPPolylineManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPPolylineManager.swift; sourceTree = "<group>"; };
+		9CF83A9C1D40E89A009F114C /* DoPPolylineManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoPPolylineManager.swift; sourceTree = "<group>"; };
+		9CFF46E21D4C52F700504407 /* DoPRandomColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoPRandomColor.swift; sourceTree = "<group>"; };
+		9CFF46E41D4F803300504407 /* DoPFloatingPointExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoPFloatingPointExtension.swift; sourceTree = "<group>"; };
 		EE236C95DE69220983A75126 /* Pods-DisplacementOfPath.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DisplacementOfPath.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DisplacementOfPath/Pods-DisplacementOfPath.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -103,9 +107,11 @@
 		9CF83A7B1D40E855009F114C /* DisplacementOfPath */ = {
 			isa = PBXGroup;
 			children = (
-				9CF83A7C1D40E855009F114C /* AppDelegate.swift */,
-				9CF83A7E1D40E855009F114C /* ViewController.swift */,
-				9CF83A9C1D40E89A009F114C /* SPPolylineManager.swift */,
+				9CF83A7C1D40E855009F114C /* DoPAppDelegate.swift */,
+				9CF83A7E1D40E855009F114C /* DoPViewController.swift */,
+				9CF83A9C1D40E89A009F114C /* DoPPolylineManager.swift */,
+				9CFF46E21D4C52F700504407 /* DoPRandomColor.swift */,
+				9CFF46E41D4F803300504407 /* DoPFloatingPointExtension.swift */,
 				9CF83A801D40E855009F114C /* Main.storyboard */,
 				9CF83A831D40E855009F114C /* Assets.xcassets */,
 				9CF83A851D40E855009F114C /* LaunchScreen.storyboard */,
@@ -275,9 +281,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9CF83A7F1D40E855009F114C /* ViewController.swift in Sources */,
-				9CF83A7D1D40E855009F114C /* AppDelegate.swift in Sources */,
-				9CF83A9D1D40E89A009F114C /* SPPolylineManager.swift in Sources */,
+				9CF83A7F1D40E855009F114C /* DoPViewController.swift in Sources */,
+				9CF83A7D1D40E855009F114C /* DoPAppDelegate.swift in Sources */,
+				9CFF46E31D4C52F700504407 /* DoPRandomColor.swift in Sources */,
+				9CFF46E51D4F803300504407 /* DoPFloatingPointExtension.swift in Sources */,
+				9CF83A9D1D40E89A009F114C /* DoPPolylineManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

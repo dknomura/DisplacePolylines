@@ -10,12 +10,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DisplacementOfPath/SPPolylineManager.swift"
-            timestampString = "490808885.256017"
+            timestampString = "491248483.085238"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "96"
-            endingLineNumber = "96"
-            landmarkName = "coordinateDisplacement(forPath:meters:)"
+            startingLineNumber = "242"
+            endingLineNumber = "242"
+            landmarkName = "SPPolylineManager"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "DisplacementOfPath/SPPolylineManager.swift"
+            timestampString = "491248510.102788"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "98"
+            endingLineNumber = "98"
+            landmarkName = "coordinateDisplacement(forPath:meters:sideOfStreet:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -26,12 +42,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DisplacementOfPath/SPPolylineManager.swift"
-            timestampString = "490809312.054962"
+            timestampString = "491348596.632918"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "87"
-            endingLineNumber = "87"
-            landmarkName = "coordinateDisplacement(forPath:meters:)"
+            startingLineNumber = "399"
+            endingLineNumber = "399"
+            landmarkName = "displacementCoordinates(fromPath:meters:sideOfStreet:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -42,12 +58,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DisplacementOfPath/SPPolylineManager.swift"
-            timestampString = "490809579.41434"
+            timestampString = "491348028.764668"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "77"
-            endingLineNumber = "77"
-            landmarkName = "coordinateDisplacement(forPath:meters:)"
+            startingLineNumber = "27"
+            endingLineNumber = "27"
+            landmarkName = "displacedPolylines(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
