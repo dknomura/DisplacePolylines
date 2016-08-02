@@ -26,19 +26,11 @@ class ViewController: UIViewController, GMSMapViewDelegate {
     }
 
     private func setUpMap() {
-        let camera: GMSCameraPosition?
-        
-        camera = GMSCameraPosition.cameraWithTarget(CLLocationCoordinate2DMake(40.7688031, -73.960618), zoom: 14.0)
-        
-        if camera != nil {
-            mapView.camera = camera!
-        }
-        
+        mapView.camera = GMSCameraPosition.cameraWithTarget(CLLocationCoordinate2DMake(40.7688031, -73.960618), zoom: 14.0)
         mapView.myLocationEnabled = true
         mapView.settings.myLocationButton = true
         mapView.delegate = self
     }
-    
     
     @IBAction func createTestPolylines(sender: UIButton) {
         if polylines.count != 0 {
@@ -49,15 +41,12 @@ class ViewController: UIViewController, GMSMapViewDelegate {
         polylines = polylineManager.testPolylines(forMapview: mapView)
     }
 
-    
     @IBAction func displacePolylines(sender: UIButton)  {
         let zoom = Double(mapView.camera.zoom)
-        
         let meters = polylineManager.metersToDisplace(byPoints: 3.5, zoom: zoom)
+        let sideOfStreet = "s"
         
-        print("meters to displace: \(meters)")
-        
-        let newPolylines =  polylineManager.displace(polylines: polylines, xMeters: meters)
+        let newPolylines = polylineManager.displace(polylines: polylines, xMeters: meters, sideOfStreet:sideOfStreet)
         for polyline in newPolylines {
             polylines.append(polyline)
         }
@@ -65,7 +54,6 @@ class ViewController: UIViewController, GMSMapViewDelegate {
         for i in 0..<polylines.count {
             let polyline = polylines[i]
             polyline.map = mapView
-            
         }
     }
 }
