@@ -151,7 +151,6 @@ UIViewController, GMSMapViewDelegate, UITextFieldDelegate {
             alertController.addAction(confirmationAction)
             presentViewController(alertController, animated: true, completion: nil)
         }
-        
     }
     
     func textFieldDidEndEditing(textField: UITextField) {
