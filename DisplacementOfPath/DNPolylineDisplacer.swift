@@ -30,6 +30,12 @@ enum PolylineError: ErrorType {
 class DNPolylineDisplacer {
     //MARK: - Polyline displacement
     
+    func displace(polylines polylines: [GMSPolyline], xPoints points:Double, zoom: Double, direction:String) -> [GMSPolyline] {
+        let meters = metersToDisplace(byPoints: points, zoom: zoom)
+        return displace(polylines: polylines, xMeters: meters, direction: direction)
+    }
+
+    
     // For multiple polylines will return displaced polylines
     func displace(polylines polylines: [GMSPolyline], xMeters meters:Double, direction:String) -> [GMSPolyline] {
         var returnArray = [GMSPolyline]()

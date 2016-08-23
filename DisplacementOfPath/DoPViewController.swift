@@ -134,12 +134,12 @@ UIViewController, GMSMapViewDelegate, UITextFieldDelegate {
             presentViewController(alertController, animated: true, completion: nil)
             return
         }
-        let meters = polylineManager.metersToDisplace(byPoints: points, zoom: zoom)
+        
         guard var direction = directionTextField.text else { return }
         
         do {
             direction = try polylineManager.normalize(direction: direction)
-            let newPolylines = polylineManager.displace(polylines: currentPolylines, xMeters: meters, direction:direction)
+            let newPolylines = polylineManager.displace(polylines: currentPolylines, xPoints: points, zoom: zoom, direction: direction)
             show(newPolylines)
             
             for polyline in newPolylines {
