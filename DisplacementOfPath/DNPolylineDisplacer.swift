@@ -8,6 +8,7 @@
 
 import Foundation
 import GoogleMaps
+import MapKit
 import CoreLocation
 
 // maybe write some tests later.. https://robots.thoughtbot.com/creating-your-first-ios-framework
@@ -17,20 +18,25 @@ enum PolylineError: ErrorType {
     case unableToRotateGeographicalBearing //Bearing must be between pi and -pi.
     case noPath(forPolyline:GMSPolyline)
     case invalidSideOfStreet // side of street must be N/S/E/W or north/south/east/west, case insensitive
+    case bearingIsNAN
+    case toAndFromCoordinatesAreTheSame
     case unknownErrorPolylineDisplacement
 }
 
-class SPPolylineManager {
+//protocol MapPolyline {}
+//extension GMSPolyline: MapPolyline {}
+//extension MKPolyline: MapPolyline {}
+
+class DNPolylineDisplacer {
     //MARK: - Polyline displacement
     
     // For multiple polylines will return displaced polylines
-    func displace(polylines polylines: [GMSPolyline], xMeters meters:Double, sideOfStreet:String) -> [GMSPolyline] {
+    func displace(polylines polylines: [GMSPolyline], xMeters meters:Double, direction:String) -> [GMSPolyline] {
         var returnArray = [GMSPolyline]()
         
         for polyline in polylines {
-            
             do {
-                returnArray.append(try displacedPolyline(originalPolyline: polyline, xMeters: meters, sideOfStreet: sideOfStreet))
+                returnArray.append(try displacedPolyline(originalPolyline: polyline, xMeters: meters, direction: direction))
             } catch PolylineError.notEnoughPoints {
                 print("Not enough points on path to make a line")
                 continue
@@ -43,20 +49,22 @@ class SPPolylineManager {
             } catch PolylineError.invalidSideOfStreet {
                 print("Invalid side of street, must be N/S/E/W or North/South/East/West, case insensitive")
                 continue
+            } catch PolylineError.toAndFromCoordinatesAreTheSame {
+                print("Invalid location. To and from coordinates are the same.")
+                continue
             } catch {
                 print("Unknown polyline displacement error.. Sorry!")
+                continue
             }
         }
         return returnArray
     }
     
     // For displacing a single polyline
-    func displacedPolyline(originalPolyline polyline:GMSPolyline, xMeters meters:Double, sideOfStreet:String) throws -> GMSPolyline {
-        guard var path = polyline.path else {
-            throw PolylineError.noPath(forPolyline: polyline)
-        }
+    func displacedPolyline(originalPolyline polyline:GMSPolyline, xMeters meters:Double, direction:String) throws -> GMSPolyline {
+        guard var path = polyline.path else { throw PolylineError.noPath(forPolyline: polyline) }
         
-        if let offset = try displacementCoordinate(fromPath: path, xMeters: meters, sideOfStreet:sideOfStreet) {
+        if let offset = try deltaLatAndLong(fromPath: path, xMeters: meters, direction:direction) {
             path = path.pathOffsetByLatitude(offset.latitude, longitude: offset.longitude)
         }
         
@@ -67,17 +75,38 @@ class SPPolylineManager {
         return polyline
     }
     
-    private func displacementCoordinate(fromPath path:GMSPath, xMeters meters:Double, sideOfStreet:String) throws -> CLLocationCoordinate2D? {
-        // http://www.movable-type.co.uk/scripts/latlong.html
-        // first find the bearing
-        // θ = atan2( sin Δλ ⋅ cos φ2 , cos φ1 ⋅ sin φ2 − sin φ1 ⋅ cos φ2 ⋅ cos Δλ )
+    private func deltaLatAndLong(fromPath path:GMSPath, xMeters meters:Double, direction:String) throws -> CLLocationCoordinate2D? {
         if path.count() < 2 {
             throw PolylineError.notEnoughPoints
         }
+        var pathBearing = bearing(forPath: path)
+        let side = try normalize(direction: direction)
         
+        do {
+            pathBearing = try rotate(pathBearing, direction: side)
+        } catch PolylineError.bearingIsNAN {
+            pathBearing = try rotateBearingIfNAN(forPath: path, direction: side)
+        }
+        
+        let fromCoordinate = path.coordinateAtIndex(0)
+        let newCoordinates = displacedCoordinates(xMeters: meters, pathBearing: pathBearing, fromCoordinate: fromCoordinate)
+        
+        //        let fromLocation = CLLocation(latitude: fromCoordinate.latitude, longitude: fromCoordinate.longitude)
+        //        let toLocation = CLLocation(latitude:radiansToDegrees(newLat), longitude:radiansToDegrees(newLong))
+        //        let distance = fromLocation.distanceFromLocation(toLocation)
+        //        print("distance is: \(distance), margin of error: \((distance - meters) / meters)")
+        
+        return CLLocationCoordinate2DMake(newCoordinates.latitude - fromCoordinate.latitude, newCoordinates.longitude - fromCoordinate.longitude)
+    }
+    
+    private func bearing(forPath path:GMSPath) -> Double {
+        // http://www.movable-type.co.uk/scripts/latlong.html
+        // first find the bearing
+        // θ = atan2( sin Δλ ⋅ cos φ2 , cos φ1 ⋅ sin φ2 − sin φ1 ⋅ cos φ2 ⋅ cos Δλ )
         let fromCoordinate = path.coordinateAtIndex(0)
         let long1 = degreesToRadians(fromCoordinate.longitude)
         let lat1 = degreesToRadians(fromCoordinate.latitude)
+        
         let toCoordinate = path.coordinateAtIndex(path.count() - 1)
         let long2 = degreesToRadians(toCoordinate.longitude)
         let lat2 = degreesToRadians(toCoordinate.latitude)
@@ -90,79 +119,25 @@ class SPPolylineManager {
         
         let y = sin(long2 - long1) * cos(lat2)
         let x = cos(lat1) * sin(lat2) - sin(lat1) * cos(lat2) * cos(long2 - long1)
-        var bearing = atan2(y, x)
-        
-        let side = try normalize(sideOfStreet: sideOfStreet)
-        //MARK: Bearing calculation
-        // To see what direction each path is, see MARK Path bearings
-        switch true {
-            // "switch true" meaning if the case statements are true
-            
-        case (bearing > 0 && bearing < M_PI_2) || bearing == M_PI_2:
-            switch side {
-            case "N", "W":
-                bearing -= M_PI_2
-            case "S", "E":
-                bearing += M_PI_2
-            default: break
-            }
-        case (bearing < 0 && bearing > -M_PI_2) || bearing == 0:
-            switch side {
-            case "N", "E":
-                bearing += M_PI_2
-            case "S", "W":
-                bearing -= M_PI_2
-            default: break
-            }
-        case (bearing > M_PI_2 && bearing < M_PI) || bearing == M_PI, bearing == -M_PI:
-            switch side {
-            case "N", "E":
-                bearing -= M_PI_2
-            case "S", "W":
-                bearing += M_PI_2
-            default: break
-            }
-        case (bearing < -M_PI_2 && bearing > -M_PI || bearing == -M_PI_2):
-            switch side {
-            case "N", "W":
-                bearing += M_PI_2
-            case "S", "E":
-                bearing -= M_PI_2
-            default: break
-            }
-        default: throw PolylineError.unableToRotateGeographicalBearing
-        }
-        
-        // Then you can find the displacement of the path
-        //        var φ2 = Math.asin( Math.sin(φ1)*Math.cos(d/R) +
-        //          Math.cos(φ1)*Math.sin(d/R)*Math.cos(brng) );
-        //        var λ2 = λ1 + Math.atan2(Math.sin(brng)*Math.sin(d/R)*
-        //          Math.cos(φ1), Math.cos(d/R)-Math.sin(φ1)*Math.sin(φ2));
-        //
-        // Angular distance = distance / radius of earth
-        let angularDistance = meters / 6371000
-        let newLat = asin(sin(lat1) * cos(angularDistance) + cos(lat1) * sin(angularDistance) * cos(bearing))
-        let newLong = long1 + atan2(sin(bearing) * sin(angularDistance) * cos(lat1), cos(angularDistance) - sin(lat1) * sin(newLat))
-        
-//        let fromLocation = CLLocation(latitude: fromCoordinate.latitude, longitude: fromCoordinate.longitude)
-//        let toLocation = CLLocation(latitude:radiansToDegrees(newLat), longitude:radiansToDegrees(newLong))
-//        let distance = fromLocation.distanceFromLocation(toLocation)
-//        print("distance is: \(distance), margin of error: \((distance - meters) / meters)")
-        
-        
-        return CLLocationCoordinate2DMake(radiansToDegrees(newLat) - fromCoordinate.latitude, radiansToDegrees(newLong) - fromCoordinate.longitude)
-    }
-
-    private func degreesToRadians(degrees:Double) -> Double {
-        return degrees * M_PI  / 180
+        let bearing = atan2(y, x)
+        return bearing
     }
     
-    private func radiansToDegrees(radians:Double) -> Double {
-        return radians * 180 / M_PI
+    private func rotateBearingIfNAN(forPath path:GMSPath, direction:String) throws -> Double {
+        let fromCoordinate = path.coordinateAtIndex(0)
+        let fromLat = fromCoordinate.latitude
+        let fromLong = fromCoordinate.longitude
+        let toCoordinate = path.coordinateAtIndex(path.count() - 1)
+        let toLat = toCoordinate.latitude
+        let toLong = toCoordinate.longitude
+        if fromLat == toLat && fromLong == toLong { throw PolylineError.toAndFromCoordinatesAreTheSame }
+        var slope = (fromLong - toLong) / (fromLat - toLat)
+        if slope.isNaN { slope = 0 }
+        return slope
     }
     
-    private func normalize(sideOfStreet sideOfStreet:String) throws -> String {
-        let sideString = sideOfStreet.lowercaseString
+    func normalize(direction direction:String) throws -> String {
+        let sideString = direction.lowercaseString
         
         switch sideString {
         case "n", "north":
@@ -177,6 +152,66 @@ class SPPolylineManager {
             throw PolylineError.invalidSideOfStreet
         }
     }
+    
+    private func rotate(bearing:Double, direction:String) throws -> Double {
+        //MARK: Bearing calculation
+        // To see what direction each path is, see MARK Path bearings
+        var pathBearing = bearing
+//        print("Bearing before rotation: \(pathBearing)")
+        switch true {
+            // "switch true" meaning if the case statements are true
+            
+        case (pathBearing > 0 && pathBearing < M_PI_2) || pathBearing == M_PI_2:
+            if direction == "N" || direction == "W" {
+                pathBearing -= M_PI_2
+            } else if direction == "S" || direction == "E" {
+                pathBearing += M_PI_2
+            }
+        case (pathBearing < 0 && pathBearing > -M_PI_2) || pathBearing == 0:
+            if direction == "N" || direction == "E" {
+                pathBearing += M_PI_2
+            } else if direction == "S" || direction == "W" {
+                pathBearing -= M_PI_2
+            }
+        case (pathBearing > M_PI_2 && pathBearing < M_PI) || pathBearing == M_PI, pathBearing == -M_PI:
+            if direction == "N" || direction == "E" {
+                pathBearing -= M_PI_2
+            } else if direction == "S" || direction == "W" {
+                pathBearing += M_PI_2
+            }
+        case (pathBearing < -M_PI_2 && pathBearing > -M_PI || pathBearing == -M_PI_2):
+            if direction == "N" || direction == "W" {
+                pathBearing += M_PI_2
+            } else if direction == "S" || direction == "E" {
+                pathBearing -= M_PI_2
+            }
+        case pathBearing.isNaN:
+            throw PolylineError.bearingIsNAN
+        default: throw PolylineError.unableToRotateGeographicalBearing
+        }
+        return pathBearing
+    }
+    
+    private func displacedCoordinates(xMeters meters:Double, pathBearing:Double, fromCoordinate:CLLocationCoordinate2D) -> CLLocationCoordinate2D {
+        // Then you can find the displacement of the path
+        //        var φ2 = Math.asin( Math.sin(φ1)*Math.cos(d/R) +
+        //          Math.cos(φ1)*Math.sin(d/R)*Math.cos(brng) );
+        //        var λ2 = λ1 + Math.atan2(Math.sin(brng)*Math.sin(d/R)*
+        //          Math.cos(φ1), Math.cos(d/R)-Math.sin(φ1)*Math.sin(φ2));
+        //
+        // Angular distance: d/R = distance / radius of earth
+        
+        let lat1 = degreesToRadians(fromCoordinate.latitude)
+        let long1 = degreesToRadians(fromCoordinate.longitude)
+        let angularDistance = meters / 6371000
+        let newLat = asin(sin(lat1) * cos(angularDistance) + cos(lat1) * sin(angularDistance) * cos(pathBearing))
+        let newLong = long1 + atan2(sin(pathBearing) * sin(angularDistance) * cos(lat1), cos(angularDistance) - sin(lat1) * sin(newLat))
+        return CLLocationCoordinate2D(latitude: radiansToDegrees(newLat), longitude: radiansToDegrees(newLong))
+    }
+
+    private func degreesToRadians(degrees:Double) -> Double { return degrees * M_PI  / 180 }
+    
+    private func radiansToDegrees(radians:Double) -> Double { return radians * 180 / M_PI }
     
     
     // MARK: - Meters to displace
@@ -195,9 +230,7 @@ class SPPolylineManager {
     
     //MARK: - Create test polylines
     func testPolylines(forMapview mapView:GMSMapView) -> [GMSPolyline] {
-        
         // creates test polylines, two connecting opposite corners, and two midpoint horizontal and vertical lines
-        
         var path = GMSMutablePath()
         var polylines = [GMSPolyline]()
         let visibleRegion = mapView.projection.visibleRegion()
