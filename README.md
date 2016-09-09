@@ -33,9 +33,13 @@ Useful to separate opposite sides of the street to display street data.
 ## Example Project
 
 An example project is included with this repo.  To run the example project, clone the repo
+
 `git clone https://github.com/dknomura/DisplacePolylines.git` 
+
 and run
+
 `pod install`
+
 from the Example directory first.
 
 ## Author
