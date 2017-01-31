@@ -14,7 +14,6 @@ UIViewController, GMSMapViewDelegate, UITextFieldDelegate {
 
     var currentPolylines = [GMSPolyline]()
     var startingAndDisplacedPolylines = [GMSPolyline]()
-    let polylineManager = DNPolylineDisplacer()
 
     @IBOutlet weak var mapView: GMSMapView!
     @IBOutlet weak var pointDisplacementTextField: UITextField!
@@ -38,26 +37,26 @@ UIViewController, GMSMapViewDelegate, UITextFieldDelegate {
         super.didReceiveMemoryWarning()
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        let notificationCenter = NSNotificationCenter.defaultCenter()
+        let notificationCenter = NotificationCenter.default
         notificationCenter.removeObserver(self)
     }
     
-    private func addNotifications() {
-        let notificationCenter = NSNotificationCenter.defaultCenter()
-        notificationCenter.addObserver(self, selector: #selector(keyboardWasShown), name: UIKeyboardDidShowNotification, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(keyboardWillBeHidden), name: UIKeyboardDidHideNotification, object: nil)
+    fileprivate func addNotifications() {
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(keyboardWasShown), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(keyboardWillBeHidden), name: NSNotification.Name.UIKeyboardDidHide, object: nil)
     }
     
-    @objc private func keyboardWasShown(notification:NSNotification) {
+    @objc fileprivate func keyboardWasShown(_ notification:Notification) {
         if isKeyboardshown { return }
-        if let info: NSDictionary = notification.userInfo {
-            if let keyboardValue = info.objectForKey(UIKeyboardFrameBeginUserInfoKey) as? NSValue {
-                let keyboardSize = keyboardValue.CGRectValue()
+        if let info: NSDictionary = notification.userInfo as NSDictionary? {
+            if let keyboardValue = info.object(forKey: UIKeyboardFrameBeginUserInfoKey) as? NSValue {
+                let keyboardSize = keyboardValue.cgRectValue
                 var viewFrame = scrollContainerView.frame
                 viewFrame.size.height -= keyboardSize.height
-                UIView.animateWithDuration(0.3, animations: {
+                UIView.animate(withDuration: 0.3, animations: {
                     self.scrollContainerView.frame = viewFrame
                 })
                 isKeyboardshown = true
@@ -65,13 +64,13 @@ UIViewController, GMSMapViewDelegate, UITextFieldDelegate {
         }
     }
     
-    @objc private func keyboardWillBeHidden(notification:NSNotification) {
-        if let info: NSDictionary = notification.userInfo {
-            if let keyboardValue = info.objectForKey(UIKeyboardFrameBeginUserInfoKey) as? NSValue {
-                let keyboardSize = keyboardValue.CGRectValue()
+    @objc fileprivate func keyboardWillBeHidden(_ notification:Notification) {
+        if let info: NSDictionary = notification.userInfo as NSDictionary? {
+            if let keyboardValue = info.object(forKey: UIKeyboardFrameBeginUserInfoKey) as? NSValue {
+                let keyboardSize = keyboardValue.cgRectValue
                 var viewFrame = scrollContainerView.frame
                 viewFrame.size.height += keyboardSize.height
-                UIView.animateWithDuration(0.3, animations: {
+                UIView.animate(withDuration: 0.3, animations: {
                     self.scrollContainerView.frame = viewFrame
                 })
                 isKeyboardshown = false
@@ -80,31 +79,31 @@ UIViewController, GMSMapViewDelegate, UITextFieldDelegate {
     }
     
     
-    private func addGestures() {
+    fileprivate func addGestures() {
         let tapGesture = UITapGestureRecognizer.init(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tapGesture)
     }
     
-    @objc private func dismissKeyboard() {
+    @objc fileprivate func dismissKeyboard() {
         view.endEditing(true)
     }
     
     
-    private func setUpMap() {
-        mapView.camera = GMSCameraPosition.cameraWithTarget(CLLocationCoordinate2DMake(40.7688031, -73.960618), zoom: 14.0)
-        mapView.myLocationEnabled = true
+    fileprivate func setUpMap() {
+        mapView.camera = GMSCameraPosition.camera(withTarget: CLLocationCoordinate2DMake(40.7688031, -73.960618), zoom: 14.0)
+        mapView.isMyLocationEnabled = true
         mapView.settings.myLocationButton = true
         mapView.settings.consumesGesturesInView = false
         mapView.delegate = self
     }
     
-    @IBAction func createTestPolylines(sender: UIButton) {
+    @IBAction func createTestPolylines(_ sender: UIButton) {
         hide(currentPolylines)
-        currentPolylines = polylineManager.testPolylines(forMapview: mapView)
+        currentPolylines = mapView.testPolylines
         show(currentPolylines)
     }
     
-    private func hide(polylines:[GMSPolyline]) {
+    fileprivate func hide(_ polylines:[GMSPolyline]) {
         if polylines.count != 0 {
             for polyline in polylines {
                 polyline.map = nil
@@ -112,7 +111,7 @@ UIViewController, GMSMapViewDelegate, UITextFieldDelegate {
         }
     }
     
-    private func show(polylines:[GMSPolyline]) {
+    fileprivate func show(_ polylines:[GMSPolyline]) {
         if polylines.count != 0 {
             for polyline in polylines {
                 polyline.map = mapView
@@ -120,40 +119,38 @@ UIViewController, GMSMapViewDelegate, UITextFieldDelegate {
         }
     }
 
-    @IBAction func displacePolylines(sender: UIButton)  {
+    @IBAction func displacePolylines(_ sender: UIButton)  {
         displacePolylines()
     }
     
-    private func displacePolylines() {
+    fileprivate func displacePolylines() {
         if currentPolylines.count == 0 { return }
         let zoom = Double(mapView.camera.zoom)
         guard let points = Double(pointDisplacementTextField.text!) else {
-            let alertController = UIAlertController.init(title: "Error", message: "Need to have valid number in text field", preferredStyle: .Alert)
-            let confirmationAction = UIAlertAction.init(title: "Okay", style: .Default, handler: nil)
+            let alertController = UIAlertController.init(title: "Error", message: "Need to have valid number in text field", preferredStyle: .alert)
+            let confirmationAction = UIAlertAction.init(title: "Okay", style: .default, handler: nil)
             alertController.addAction(confirmationAction)
-            presentViewController(alertController, animated: true, completion: nil)
+            present(alertController, animated: true, completion: nil)
             return
         }
         
-        guard var direction = directionTextField.text else { return }
-        
-        do {
-            direction = try polylineManager.normalize(direction: direction)
-            let newPolylines = polylineManager.displace(polylines: currentPolylines, xPoints: points, zoom: zoom, direction: direction)
-            show(newPolylines)
-            
-            for polyline in newPolylines {
-                currentPolylines.append(polyline)
-            }
-        } catch {
-            let alertController = UIAlertController.init(title: "Error", message: "Need to have valid direction in text field", preferredStyle: .Alert)
-            let confirmationAction = UIAlertAction.init(title: "Okay", style: .Default, handler: nil)
+        guard let direction = Direction.init(withString: directionTextField.text!) else {
+            let alertController = UIAlertController.init(title: "Error", message: "Need to have valid direction in text field", preferredStyle: .alert)
+            let confirmationAction = UIAlertAction.init(title: "Okay", style: .default, handler: nil)
             alertController.addAction(confirmationAction)
-            presentViewController(alertController, animated: true, completion: nil)
+            present(alertController, animated: true, completion: nil)
+            return
+        }
+        
+        let newPolylines = currentPolylines.flatMap { try? $0.displaced(xPoints: points, zoom: zoom, direction: direction) }
+        show(newPolylines)
+        
+        for polyline in newPolylines {
+            currentPolylines.append(polyline)
         }
     }
     
-    func textFieldDidEndEditing(textField: UITextField) {
+    func textFieldDidEndEditing(_ textField: UITextField) {
         if textField === pointDisplacementTextField {
             if textField.text == "" { textField.text = "3.5" }
         }

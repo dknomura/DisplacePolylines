@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9CF83A7D1D40E855009F114C /* DoPAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF83A7C1D40E855009F114C /* DoPAppDelegate.swift */; };
-		9CF83A7F1D40E855009F114C /* DoPViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF83A7E1D40E855009F114C /* DoPViewController.swift */; };
+		9CF83A7D1D40E855009F114C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF83A7C1D40E855009F114C /* AppDelegate.swift */; };
+		9CF83A7F1D40E855009F114C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF83A7E1D40E855009F114C /* ViewController.swift */; };
 		9CF83A821D40E855009F114C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CF83A801D40E855009F114C /* Main.storyboard */; };
 		9CF83A841D40E855009F114C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9CF83A831D40E855009F114C /* Assets.xcassets */; };
 		9CF83A871D40E855009F114C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CF83A851D40E855009F114C /* LaunchScreen.storyboard */; };
 		9CF83A921D40E856009F114C /* DisplacementOfPathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF83A911D40E856009F114C /* DisplacementOfPathTests.swift */; };
-		9CF83A9D1D40E89A009F114C /* DNPolylineDisplacer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF83A9C1D40E89A009F114C /* DNPolylineDisplacer.swift */; };
+		9CF83A9D1D40E89A009F114C /* DisplacePolyline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF83A9C1D40E89A009F114C /* DisplacePolyline.swift */; };
 		A5F595C9E80708267285C1FF /* Pods_DisplacementOfPath.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2ABCADC2B3D7B14D233CDA66 /* Pods_DisplacementOfPath.framework */; };
 /* End PBXBuildFile section */
 
@@ -31,8 +31,8 @@
 		2ABCADC2B3D7B14D233CDA66 /* Pods_DisplacementOfPath.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DisplacementOfPath.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		763923CF28A996CF84131132 /* Pods-DisplacementOfPath.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DisplacementOfPath.release.xcconfig"; path = "Pods/Target Support Files/Pods-DisplacementOfPath/Pods-DisplacementOfPath.release.xcconfig"; sourceTree = "<group>"; };
 		9CF83A791D40E855009F114C /* DisplacementOfPath.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DisplacementOfPath.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		9CF83A7C1D40E855009F114C /* DoPAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoPAppDelegate.swift; sourceTree = "<group>"; };
-		9CF83A7E1D40E855009F114C /* DoPViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoPViewController.swift; sourceTree = "<group>"; };
+		9CF83A7C1D40E855009F114C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		9CF83A7E1D40E855009F114C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		9CF83A811D40E855009F114C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9CF83A831D40E855009F114C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9CF83A861D40E855009F114C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -40,7 +40,7 @@
 		9CF83A8D1D40E856009F114C /* DisplacementOfPathTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DisplacementOfPathTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CF83A911D40E856009F114C /* DisplacementOfPathTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplacementOfPathTests.swift; sourceTree = "<group>"; };
 		9CF83A931D40E856009F114C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9CF83A9C1D40E89A009F114C /* DNPolylineDisplacer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DNPolylineDisplacer.swift; sourceTree = "<group>"; };
+		9CF83A9C1D40E89A009F114C /* DisplacePolyline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplacePolyline.swift; sourceTree = "<group>"; };
 		EE236C95DE69220983A75126 /* Pods-DisplacementOfPath.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DisplacementOfPath.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DisplacementOfPath/Pods-DisplacementOfPath.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -103,9 +103,9 @@
 		9CF83A7B1D40E855009F114C /* DisplacementOfPath */ = {
 			isa = PBXGroup;
 			children = (
-				9CF83A7C1D40E855009F114C /* DoPAppDelegate.swift */,
-				9CF83A7E1D40E855009F114C /* DoPViewController.swift */,
-				9CF83A9C1D40E89A009F114C /* DNPolylineDisplacer.swift */,
+				9CF83A7C1D40E855009F114C /* AppDelegate.swift */,
+				9CF83A7E1D40E855009F114C /* ViewController.swift */,
+				9CF83A9C1D40E89A009F114C /* DisplacePolyline.swift */,
 				9CF83A801D40E855009F114C /* Main.storyboard */,
 				9CF83A831D40E855009F114C /* Assets.xcassets */,
 				9CF83A851D40E855009F114C /* LaunchScreen.storyboard */,
@@ -171,14 +171,16 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = "Daniel Nomura";
 				TargetAttributes = {
 					9CF83A781D40E855009F114C = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0820;
 					};
 					9CF83A8C1D40E856009F114C = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0820;
 						TestTargetID = 9CF83A781D40E855009F114C;
 					};
 				};
@@ -275,9 +277,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9CF83A7F1D40E855009F114C /* DoPViewController.swift in Sources */,
-				9CF83A7D1D40E855009F114C /* DoPAppDelegate.swift in Sources */,
-				9CF83A9D1D40E89A009F114C /* DNPolylineDisplacer.swift in Sources */,
+				9CF83A7F1D40E855009F114C /* ViewController.swift in Sources */,
+				9CF83A7D1D40E855009F114C /* AppDelegate.swift in Sources */,
+				9CF83A9D1D40E89A009F114C /* DisplacePolyline.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -333,8 +335,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -379,8 +383,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -399,6 +405,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -413,6 +420,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = dnom.DisplacementOfPath;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -425,6 +433,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = dnom.DisplacementOfPath;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -436,6 +445,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = dnom.DisplacementOfPathTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DisplacementOfPath.app/DisplacementOfPath";
 			};
 			name = Debug;
@@ -448,6 +458,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = dnom.DisplacementOfPathTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DisplacementOfPath.app/DisplacementOfPath";
 			};
 			name = Release;

@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import DisplacementOfPath
+//@testable import DisplacementOfPath
 
 class DisplacementOfPathTests: XCTestCase {
     
@@ -28,7 +28,7 @@ class DisplacementOfPathTests: XCTestCase {
     
     func testPerformanceExample() {
         // This is an example of a performance test case.
-        self.measureBlock {
+        self.measure {
             // Put the code you want to measure the time of here.
         }
     }
