@@ -14,9 +14,10 @@ For example project
 ## Usage
 ```
 var yourUndisplacedPolylines: [GMSPolyline]
-let polylineDisplacer = DNPolylineDisplacer()
 let zoom = yourMapView.camera.zoom
-let displacedPolylines = polylineDisplacer.displace(polylines: currentPolylines, xPoints: 2.0, zoom: zoom, direction: "W")
+let displacedPolylines = yourUndisplacedPolylines.flatMap { try? $0.displaced(xPoints: 2.0, zoom: zoom, direction: .west) }
+// or displace by meters: 
+// let displacedPolylines = yourUndisplacedPolylines.flatMap { try? $0.displaced(xMeters: 10.0, zoom: zoom, direction: .north) }
 for polyline in displacedPolylines { polyline.map = yourMapView }
 ```
 
