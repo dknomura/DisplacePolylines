@@ -4,7 +4,12 @@ A simple framework to displace polylines on a map. Useful for separating opposit
 ## Installation 
 At this time cannot create a pod that is dependent on GoogleMaps pod, so go to 
 https://github.com/dknomura/DiplacePolyline/blob/master/DisplacementOfPath/DNPolylineDisplacer.swift
+
 Right click Raw -> Save link as
+
+For example project
+
+`git clone https://github.com/dknomura/DisplacePolylines.git`
 
 ## Usage
 ```
@@ -18,18 +23,28 @@ for polyline in displacedPolylines { polyline.map = yourMapView }
 If separating two sides of a street, displacing each by 2.0 points allows it to show two distinct sides.  
 
 ## Examples
+#### Example Project
 ![Example project screenshot](ScreenShot.png)
 
-Useful to separate opposite sides of the street to display street data
-![Swoop parking screenshot]StreetLevelScreenShot.png]
+Useful to separate opposite sides of the street to display street data.
+
+![Swoop parking screenshot](StreetLevelScreenShot.png)
 
 ## Example Project
 
-An example project is included with this repo.  To run the example project, clone the repo, and run `pod install` from the Example directory first.
+An example project is included with this repo.  To run the example project, clone the repo
+
+`git clone https://github.com/dknomura/DisplacePolylines.git` 
+
+and run
+
+`pod install`
+
+from the Example directory first.
 
 ## Author
 
-Daniel Nomura
+dknomura
 
 ## License
 
